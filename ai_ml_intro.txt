@@ -1,0 +1,14 @@
+
+Artificial Intelligence and Machine Learning
+
+Artificial Intelligence (AI) is a broad field of computer science focused on creating intelligent machines that can perform tasks that typically require human intelligence. These tasks include visual perception, speech recognition, decision-making, and language translation.
+
+Machine Learning (ML) is a subset of AI that focuses on the development of algorithms and statistical models that enable computer systems to improve their performance on a specific task through experience. Instead of explicitly programming rules, machine learning systems can learn from data.
+
+Key differences between AI and ML:
+1. Scope: AI is a broader concept aiming to create intelligent machines, while ML is a specific approach to achieve AI.
+2. Functionality: AI systems can make decisions, while ML systems learn patterns from data.
+3. Goal: The goal of AI is to increase the chances of success, not accuracy, while ML specifically aims to increase accuracy of a model.
+
+Both AI and ML are crucial in today's technological landscape, driving innovations in various fields such as healthcare, finance, and autonomous vehicles.
+    

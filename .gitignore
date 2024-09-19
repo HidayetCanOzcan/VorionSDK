@@ -1,0 +1,6 @@
+node_modules
+package-lock.json
+dist
+.env
+exampletests.ts
+_.rise-consulting.net.pem
