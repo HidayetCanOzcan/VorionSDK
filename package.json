@@ -23,9 +23,9 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/HidayetCanOzcan/vorion-sdk.git"
+		"url": "git+https://github.com/HidayetCanOzcan/VorionSDK.git"
 	},
-	"homepage": "https://github.com/HidayetCanOzcan/vorion-sdk#readme",
+	"homepage": "https://github.com/HidayetCanOzcan/VorionSDK#readme",
 	"keywords": [
 		"pair",
 		"vorion",
