@@ -2,46 +2,19 @@ import VorionRAGSDK from '../RAG';
 import { QueryIngestStateRequest } from '../RAG/methods/ingest-query-state/types';
 import { IngestRequest } from '../RAG/methods/ingest/types';
 import { RetrieveRequest } from '../RAG/methods/retrieve/types';
-import * as fs from 'fs/promises';
 import * as path from 'path';
 
-async function createSampleTextFile(): Promise<string> {
-	const content = `
-Artificial Intelligence and Machine Learning
-
-Artificial Intelligence (AI) is a broad field of computer science focused on creating intelligent machines that can perform tasks that typically require human intelligence. These tasks include visual perception, speech recognition, decision-making, and language translation.
-
-Machine Learning (ML) is a subset of AI that focuses on the development of algorithms and statistical models that enable computer systems to improve their performance on a specific task through experience. Instead of explicitly programming rules, machine learning systems can learn from data.
-
-Key differences between AI and ML:
-1. Scope: AI is a broader concept aiming to create intelligent machines, while ML is a specific approach to achieve AI.
-2. Functionality: AI systems can make decisions, while ML systems learn patterns from data.
-3. Goal: The goal of AI is to increase the chances of success, not accuracy, while ML specifically aims to increase accuracy of a model.
-
-Both AI and ML are crucial in today's technological landscape, driving innovations in various fields such as healthcare, finance, and autonomous vehicles.
-    `;
-
-	const fileName = 'ai_ml_intro.txt';
-	await fs.writeFile(fileName, content);
-	return path.resolve(fileName);
-}
-
 async function runRAGWorkflow() {
-	console.log(process.env.NODE_TLS_REJECT_UNAUTHORIZED);
 	if (!process.env.RAG_HOST) {
 		console.log('Please create .env file and put a varible with name RAG_HOST.');
 		return;
 	}
 	const sdk = new VorionRAGSDK(process.env.RAG_HOST);
 
-	// Step 1: Create a sample text file
-	console.log('Creating sample text file...');
-	const filePath = await createSampleTextFile();
-	console.log('Sample file created:', filePath);
+	const filePath = path.resolve('ai_ml_intro.txt');
 
 	const collection_name = `doc_${Math.random().toString(36)}`;
 
-	// Step 2: Ingest document
 	const ingestRequest: IngestRequest = {
 		data_sources: [
 			{
@@ -71,7 +44,6 @@ async function runRAGWorkflow() {
 		return;
 	}
 
-	// Step 2: Query ingest state
 	const queryStateRequest: QueryIngestStateRequest = {
 		task_id: ingestResult.response.task_id,
 	};
@@ -94,7 +66,6 @@ async function runRAGWorkflow() {
 		}
 	}
 
-	// Step 3: Retrieve relevant documents
 	const retrieveRequest: RetrieveRequest = {
 		embedder_name: 'azure',
 		vectorstore_name: 'elastic',

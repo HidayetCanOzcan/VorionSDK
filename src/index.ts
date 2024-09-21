@@ -19,5 +19,8 @@ export * as GetHistoryTypes from './LLM/methods/getHistory/types';
 export * as GetLlmConfigTypes from './LLM/methods/getLlmConfig/types';
 export * as PredictTypes from './LLM/methods/predict/types';
 
+export * as SocketTypes from './SOCKET/types';
+
 export { default as VorionRAGSDK } from './RAG';
 export { default as VorionLLMSDK } from './LLM';
+export { default as VorionWebSocket } from './SOCKET';

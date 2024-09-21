@@ -1,11 +1,12 @@
 # Vorion SDK
 
-Vorion SDK is a comprehensive TypeScript SDK for interacting with VORION RAG & LLM APIs. It currently supports REST APIs, with plans for WebSocket interface support in the future.
+Vorion SDK is a comprehensive TypeScript SDK for interacting with VORION RAG & LLM APIs. It supports both REST APIs and WebSocket interfaces for real-time communication.
 
 ## Features
 
 - Extensive support for RAG (Retrieval-Augmented Generation) operations
 - Wide range of API endpoints for LLM (Large Language Model) interactions
+- WebSocket support for real-time event handling
 - Full TypeScript support with robust type definitions
 - High-level abstraction for ease of use
 - Custom `CustomFetch` implementation for error handling and logging
@@ -22,121 +23,88 @@ npm install vorion-sdk
 
 ## Usage
 
-To use Vorion SDK in your project, first import it and create an instance:
+To use Vorion SDK in your project, first import it and create instances:
 
 ```typescript
-import { VorionRAGSDK, VorionLLMSDK } from 'vorion-sdk';
+import { VorionRAGSDK, VorionLLMSDK, VorionWebSocket } from 'vorion-sdk';
 
 const ragSdk = new VorionRAGSDK('https://your-rag-api-base-url.com');
 const llmSdk = new VorionLLMSDK('https://your-llm-api-base-url.com');
+const socket = VorionWebSocket('wss://your-websocket-url.com', 'your-session-id');
 ```
 
 ## RAG (Retrieval-Augmented Generation) Functions
 
 Vorion SDK provides a comprehensive set of functions for RAG operations:
 
-| Function           | Description                                                           | Use Case                                                |
-| ------------------ | --------------------------------------------------------------------- | ------------------------------------------------------- |
-| `embed`            | Converts documents or queries into embedding vectors                  | When you need to create vector representations of text  |
-| `aembed`           | Initiates an asynchronous embedding process                           | For large-scale embedding tasks that may take time      |
-| `ingest`           | Processes documents and adds them to the vector store                 | When ingesting new documents into your knowledge base   |
-| `aingest`          | Starts an asynchronous document processing and ingestion              | For ingesting large volumes of documents                |
-| `ingestMultipart`  | Performs document processing and ingestion with multipart data upload | When ingesting documents along with metadata files      |
-| `aingestMultipart` | Initiates an asynchronous multipart data upload process               | For large-scale, multipart document ingestion           |
-| `queryIngestState` | Queries the state of an ingestion operation                           | To check the progress of an asynchronous ingestion task |
-| `rollbackIngest`   | Reverts an ingestion operation                                        | When you need to undo a recent document ingestion       |
-| `load`             | Loads documents                                                       | For retrieving documents from your data source          |
-| `aload`            | Initiates an asynchronous document loading process                    | When loading large volumes of documents                 |
-| `retrieve`         | Fetches relevant documents                                            | For finding documents related to a given query          |
+| Function           | Description                                                           |
+| ------------------ | --------------------------------------------------------------------- |
+| `embed`            | Converts documents or queries into embedding vectors                  |
+| `aembed`           | Initiates an asynchronous embedding process                           |
+| `ingest`           | Processes documents and adds them to the vector store                 |
+| `aingest`          | Starts an asynchronous document processing and ingestion              |
+| `ingestMultipart`  | Performs document processing and ingestion with multipart data upload |
+| `aingestMultipart` | Initiates an asynchronous multipart data upload process               |
+| `queryIngestState` | Queries the state of an ingestion operation                           |
+| `rollbackIngest`   | Reverts an ingestion operation                                        |
+| `load`             | Loads documents                                                       |
+| `aload`            | Initiates an asynchronous document loading process                    |
+| `retrieve`         | Fetches relevant documents                                            |
 
 ## LLM (Large Language Model) Functions
 
 The SDK offers various functions for interacting with Large Language Models:
 
-| Function         | Description                                      | Use Case                                                |
-| ---------------- | ------------------------------------------------ | ------------------------------------------------------- |
-| `predict`        | Obtains a prediction from the LLM                | When you need a quick response from the model           |
-| `apredict`       | Initiates an asynchronous LLM prediction         | For longer, more complex queries that may take time     |
-| `getHistory`     | Retrieves chat history                           | When you need to review or analyze past interactions    |
-| `getLlmConfig`   | Obtains the LLM configuration                    | To check or verify the current LLM settings             |
-| `comparePredict` | Compares predictions from different LLMs         | When evaluating multiple models for a task              |
-| `agentBasic`     | Runs a basic AI agent                            | For simple task automation or decision-making           |
-| `agentAbasic`    | Initiates an asynchronous basic AI agent process | For longer-running automated tasks                      |
-| `agentTeam`      | Runs a team of AI agents                         | For complex tasks requiring multiple specialized agents |
-| `getFile`        | Downloads a specific file                        | When you need to retrieve a particular document         |
-| `getAllFiles`    | Downloads all files as a ZIP                     | For bulk document retrieval                             |
+| Function         | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| `predict`        | Obtains a prediction from the LLM                |
+| `apredict`       | Initiates an asynchronous LLM prediction         |
+| `getHistory`     | Retrieves chat history                           |
+| `getLlmConfig`   | Obtains the LLM configuration                    |
+| `comparePredict` | Compares predictions from different LLMs         |
+| `agentBasic`     | Runs a basic AI agent                            |
+| `agentAbasic`    | Initiates an asynchronous basic AI agent process |
+| `agentTeam`      | Runs a team of AI agents                         |
+| `getFile`        | Downloads a specific file                        |
+| `getAllFiles`    | Downloads all files as a ZIP                     |
+
+## WebSocket Support
+
+Vorion SDK now includes WebSocket support for real-time communication and event handling. This is particularly useful for scenarios requiring asynchronous operations and instant updates.
+
+**Note:** The WebSocket functionality is currently in its initial implementation. The type definitions for WebSocket events and payloads are not yet fully type-safe. We plan to improve and complete these types in future versions of the SDK to provide a more robust and type-safe experience.
+
+### Connecting to WebSocket
+
+```typescript
+import { VorionWebSocket, VorionEvents } from 'vorion-sdk';
+
+const socket = VorionWebSocket('wss://your-websocket-url.com', 'your-session-id');
+```
+
+### Handling Vorion Events
+
+```typescript
+socket.on(VorionEvents.PREDICTION_COMPLETE, (payload) => {
+	console.log('Prediction complete:', payload);
+});
+
+socket.on(VorionEvents.INGEST_DOCUMENTS_SUCCEEDED, (payload) => {
+	console.log('Document ingestion succeeded:', payload);
+});
+
+// ... handle other events as needed
+```
+
+### Closing the WebSocket Connection
+
+```typescript
+socket.close();
+```
 
 ## Examples
 
-You can find more detailed examples in the `examples` folder of this repository. Here are a few quick examples to get you started:
-
-### RAG Operation Example
-
-```typescript
-const ingestResult = await ragSdk.aingest({
-	data_sources: [
-		{
-			type: 'txt',
-			target: 'path/to/file.txt',
-			metadata: { subject: 'AI basics' },
-			parameters: {},
-		},
-	],
-	embedder_name: 'azure',
-	vectorstore_name: 'elastic',
-	collection_name: 'ai_documents',
-	embed_documents: true,
-	index_documents: true,
-});
-
-console.log('Ingestion task ID:', ingestResult.response?.task_id);
-
-// Query ingestion state
-const stateResult = await ragSdk.queryIngestState({ task_id: ingestResult.response?.task_id });
-console.log('Ingestion state:', stateResult.response?.current_state);
-
-// Retrieve relevant documents
-const retrieveResult = await ragSdk.retrieve({
-	embedder_name: 'azure',
-	vectorstore_name: 'elastic',
-	collection_name: 'ai_documents',
-	search_in_vectorstore: true,
-	search_in_indexstore: true,
-	query: 'What is machine learning?',
-	k: 5,
-});
-
-console.log('Retrieved documents:', retrieveResult.response?.calculated_relevant_documents);
-```
-
-### LLM Prediction Example
-
-```typescript
-const predictResult = await llmSdk.predict({
-	conversation_state_key: 'unique_conversation_id',
-	prompt: {
-		text: 'Explain the concept of neural networks in simple terms.',
-		sensitive_info: false,
-	},
-	llm_name: 'gpt-3.5-turbo',
-	load_balancer_strategy_name: 'default',
-});
-
-console.log('LLM response:', predictResult.response?.answer);
-
-// Compare predictions from different models
-const compareResult = await llmSdk.comparePredict({
-	conversation_state_key: 'unique_conversation_id',
-	prompt: {
-		text: 'What are the ethical implications of AI?',
-		sensitive_info: false,
-	},
-	llm_name: 'gpt-3.5-turbo',
-	load_balancer_strategy_name: 'default',
-});
-
-console.log('Comparison results:', compareResult.response);
-```
+For more detailed examples and use cases, please refer to the `examples` folder in this repository. These examples cover various scenarios and demonstrate how to use different features of the Vorion SDK effectively, including the new WebSocket functionality.
 
 ## Error Handling
 
@@ -193,11 +161,8 @@ const result = await ragSdk.ingestMultipart({
 
 ## Future Features
 
-- **WebSocket Support**: We plan to add WebSocket support for real-time communication and long-running operations. This will be particularly useful for scenarios requiring asynchronous operations and instant updates.
-
-## Examples
-
-For more detailed examples and use cases, please refer to the `examples` folder in this repository. These examples cover various scenarios and demonstrate how to use different features of the Vorion SDK effectively.
+- **Enhanced WebSocket Support**: We plan to expand our WebSocket capabilities, including support for custom events and improved error handling. This will include completing and refining the type definitions for WebSocket events and payloads to provide a fully type-safe experience.
+- **Real-time Collaboration**: Implement features that leverage WebSockets for real-time collaboration between multiple users or agents.
 
 ## License
 

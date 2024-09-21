@@ -1,6 +1,6 @@
 {
 	"name": "vorion-sdk",
-	"version": "0.5.0",
+	"version": "0.7.0",
 	"description": "A comprehensive TypeScript SDK for interacting with the VORION Rag & LLM  Apis, supporting both REST and WebSocket interfaces.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,7 +9,8 @@
 		"prepublishOnly": "npm run build",
 		"test": "jest",
 		"example": "npm run build && node --env-file=.env ./dist/example/index.js",
-		"examples-rag-workflow": "npm run build && node --env-file=.env ./dist/examples/rag-workflow.js"
+		"examples-rag-workflow": "npm run build && node --env-file=.env ./dist/examples/rag-workflow.js",
+		"examples-websocket": "npm run build && node --env-file=.env ./dist/examples/websocket.js"
 	},
 	"exports": {
 		".": {
