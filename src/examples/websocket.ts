@@ -1,4 +1,6 @@
+import { LLMGroupNameOptions, LLMOptions, LoadBalanceStrategyOptions, MemoryOptions, MemoryStrategyOptions } from '../globalEnums';
 import VorionLLMSDK from '../LLM';
+import { APredictRequest } from '../LLM/methods/apredict/types';
 import VorionRAGSDK from '../RAG';
 import VorionWebSocket from '../SOCKET';
 import { VorionEvents } from '../SOCKET/types';
@@ -49,14 +51,18 @@ async function ingestDocumentExample() {
 	}
 }
 async function predictExample() {
-	const predictRequest = {
+	const predictRequest: APredictRequest = {
 		conversation_state_key: SESSION_ID,
 		prompt: {
 			text: 'What is the capital of France?',
 			sensitive_info: false,
 		},
-		llm_name: 'gpt-3.5-turbo',
-		load_balancer_strategy_name: 'default',
+		llm_name: LLMOptions.OpenAI,
+		llm_group_name: LLMGroupNameOptions['gpt-4'],
+		memory_strategy_name: MemoryStrategyOptions.FullSummarize,
+		memory_type: MemoryOptions.Redis,
+		user_id: 'test-user',
+		load_balancer_strategy_name: LoadBalanceStrategyOptions.DynamicWeightedRoundRobin,
 	};
 
 	try {

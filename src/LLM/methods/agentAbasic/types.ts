@@ -1,3 +1,6 @@
+import { LLMGroupNameOptions, LLMOptions, LoadBalanceStrategyOptions, MemoryOptions, MemoryStrategyOptions } from '../../../globalEnums';
+import { AgentModelParameters } from '../../globalTypes';
+
 export type AgentAbasicRequest = {
 	team_id: string;
 	assistant_name: string;
@@ -13,12 +16,12 @@ export type AgentAbasicRequest = {
 	conversation_state_key: string;
 	images?: string[] | null;
 	system_message?: string | null;
-	llm_name: string;
-	llm_group_name?: string | null;
-	load_balancer_strategy_name: string;
-	memory_type?: string | null;
-	memory_strategy_name?: string | null;
-	agent_model_parameters?: Record<string, string | number | boolean | string[]> | null;
+	llm_name: LLMOptions | string;
+	llm_group_name: LLMGroupNameOptions | string;
+	load_balancer_strategy_name: LoadBalanceStrategyOptions;
+	memory_type?: MemoryOptions;
+	memory_strategy_name?: MemoryStrategyOptions;
+	agent_model_parameters?: AgentModelParameters;
 	repsond_in_one_go?: boolean;
 	available_tools?: string[] | null;
 };

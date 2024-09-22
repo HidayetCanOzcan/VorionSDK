@@ -1,11 +1,13 @@
+import { LLMGroupNameOptions, LLMOptions, LoadBalanceStrategyOptions, MemoryOptions, MemoryStrategyOptions } from '../../../globalEnums';
+
 export type GetHistoryRequest = {
 	conversation_state_key: string;
-	system_message?: string | null;
-	llm_name: string;
-	llm_group_name?: string | null;
-	load_balancer_strategy_name: string;
-	memory_type?: string | null;
-	memory_strategy_name?: string | null;
+	memory_type: MemoryOptions;
+	memory_strategy_name?: MemoryStrategyOptions;
+	system_message?: string;
+	llm_name?: LLMOptions | string;
+	llm_group_name?: LLMGroupNameOptions | string;
+	load_balancer_strategy_name?: LoadBalanceStrategyOptions;
 };
 
 export type LLMMessage = {
@@ -14,10 +16,10 @@ export type LLMMessage = {
 	sensitive_info: boolean;
 	removed_from_history: boolean;
 	added_to_summarize_history: boolean;
-	rag_content?: string | null;
-	save_prompt_with_rag_content?: boolean | null;
-	prompt_with_rag_content?: string | null;
-	is_summary?: boolean | null;
+	rag_content?: string;
+	save_prompt_with_rag_content?: boolean;
+	prompt_with_rag_content?: string;
+	is_summary?: boolean;
 };
 
 export type GetHistoryResponse = LLMMessage[];
