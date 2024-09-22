@@ -21,6 +21,10 @@ export * as PredictTypes from './LLM/methods/predict/types';
 
 export * as SocketTypes from './SOCKET/types';
 
+export * as VorionEnums from './globalEnums';
+
+export * as LlmGlobalTypes from './LLM/globalTypes';
+
 export { default as VorionRAGSDK } from './RAG';
 export { default as VorionLLMSDK } from './LLM';
 export { default as VorionWebSocket } from './SOCKET';
