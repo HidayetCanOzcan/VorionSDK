@@ -47,6 +47,11 @@
 		"typescript": "^5.5.2"
 	},
 	"dependencies": {
-		"node-fetch": "^3.3.2"
+		"@dapr/dapr": "^3.4.1",
+		"@elysiajs/cors": "^1.1.1",
+		"@types/uuid": "^10.0.0",
+		"elysia": "^1.1.16",
+		"node-fetch": "^3.3.2",
+		"uuid": "^10.0.0"
 	}
 }

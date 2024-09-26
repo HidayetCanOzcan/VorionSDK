@@ -25,6 +25,9 @@ export * as VorionEnums from './globalEnums';
 
 export * as LlmGlobalTypes from './LLM/globalTypes';
 
+export * as VorionServerTypes from './SERVER/types';
+
 export { default as VorionRAGSDK } from './RAG';
 export { default as VorionLLMSDK } from './LLM';
 export { default as VorionWebSocket } from './SOCKET';
+export { createVorionServer } from './SERVER';
