@@ -133,8 +133,8 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 		})
 		.group('/subs', (app) => {
 			(Object.keys(DaprEvents) as Array<keyof typeof DaprEvents>).forEach((event) => {
-				app.post(DaprEvents[event], async ({ request, set }) => {
-					const eventName = DaprEvents[event];
+				const eventName = DaprEvents[event];
+				app.post(`/${eventName}`, async ({ request, set }) => {
 					try {
 						console.log(`📑 Triggered Event: ${eventName}`);
 						const { data } = await request.json();
