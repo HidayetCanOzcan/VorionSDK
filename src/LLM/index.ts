@@ -1,4 +1,3 @@
-// VorionLLMSDK.ts
 import CustomFetch from '../CustomFetch';
 import type { CustomFetchReturnType } from '../CustomFetch/types';
 import { predictMethod } from './methods/predict';
@@ -19,15 +18,18 @@ import { agentTeamMethod } from './methods/agentTeam';
 import type { AgentTeamRequest, AgentTeamResponse } from './methods/agentTeam/types';
 import { getFileMethod, getAllFilesMethod } from './methods/files';
 import type { ApiError } from './methods/files/types';
+import { DaprClient } from '@dapr/dapr';
 
 class VorionLLMSDK {
+	private daprClient?: DaprClient;
 	private customFetch: typeof CustomFetch;
 	private baseUrl: string;
 
-	constructor(baseUrl: string) {
+	constructor(baseUrl: string, daprClient?: DaprClient) {
+		this.daprClient = daprClient;
 		this.customFetch = CustomFetch;
 		this.baseUrl = baseUrl;
-		this.predict = predictMethod(this.baseUrl, this.customFetch);
+		this.predict = predictMethod(this.baseUrl, this.customFetch, this.daprClient);
 		this.apredict = apredictMethod(this.baseUrl, this.customFetch);
 		this.getHistory = getHistoryMethod(this.baseUrl, this.customFetch);
 		this.getLlmConfig = getLlmConfigMethod(this.baseUrl, this.customFetch);
@@ -39,7 +41,7 @@ class VorionLLMSDK {
 		this.getAllFiles = getAllFilesMethod(this.baseUrl, this.customFetch);
 	}
 
-	predict: (request: PredictRequest) => Promise<CustomFetchReturnType<PredictResponse, ApiError>>;
+	predict: (request: PredictRequest, useDapr?: boolean) => Promise<CustomFetchReturnType<PredictResponse, ApiError>>;
 	apredict: (request: APredictRequest) => Promise<CustomFetchReturnType<APredictResponse, ApiError>>;
 	getHistory: (request: GetHistoryRequest) => Promise<CustomFetchReturnType<GetHistoryResponse, ApiError>>;
 	getLlmConfig: () => Promise<CustomFetchReturnType<GetLlmConfigResponse, ApiError>>;

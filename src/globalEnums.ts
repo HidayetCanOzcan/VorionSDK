@@ -73,3 +73,19 @@ export enum VectorStoreOptions {
 	Redis = 'redis',
 	Chroma = 'chroma',
 }
+export enum VorionServiceAppIds {
+	LLM = 'pairbone-llm-api',
+	RAG = 'pairbone-rag-api',
+}
+export enum VorionMethodPaths {
+	LLM_PREDICTION_SERVICE_ASYNC = 'api/v1/apredict',
+	LLM_PREDICTION_SERVICE = 'api/v1/predict',
+	LLM_AGENT_SERVICE = 'api/v1/agent/basic',
+	LLM_AGENT_SERVICE_ASYNC = 'api/v1/agent/abasic',
+	LLM_UPLOAD = 'api/v1/upload',
+	RAG_INGEST_SERVICE_ASYNC = 'api/v1/aingest',
+	RAG_INGEST_SERVICE = 'api/v1/ingest',
+	RAG_INGEST_QUERY_STATE = 'api/v1/ingest/query-state',
+	RAG_INGEST_ROLLBACK = 'api/v1/ingest/rollback-ingest',
+	RAG_RETRIEVE = 'api/v1/retrieve',
+}
