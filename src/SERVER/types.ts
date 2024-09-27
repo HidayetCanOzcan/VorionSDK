@@ -12,7 +12,7 @@ export enum Events {
 }
 
 export enum DaprEvents {
-	PREDICTION_COMPLETE = 'prediction-complete',
+	PREDICTION_COMPLETE = 'prediction-completed',
 	PREDICTION_FAILED = 'prediction-failed',
 	INGEST_DOCUMENTS_LOADED = 'ingest-documents-loaded',
 	INGEST_DOCUMENTS_LOADED_ERROR = 'ingest-documents-loaded-error',
