@@ -55,6 +55,7 @@ export type wsServerResponses = Partial<{
 	[K in DaprEvents]: {
 		payload: any;
 		role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
+		event?: string;
 	};
 }>;
 
