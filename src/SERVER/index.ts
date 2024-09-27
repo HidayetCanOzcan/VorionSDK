@@ -4,6 +4,14 @@ import Elysia from 'elysia';
 import { AuthenticationError, AuthorizationError, InternalServerError, InvariantError, NotFoundError } from './exceptions';
 import { wsManager } from './WebSocketManager';
 
+function getUserId(data: any): string | null {
+	if (data.user_id) return data.user_id;
+	if (data.ingest_response_model && data.ingest_response_model.user_id) return data.ingest_response_model.user_id;
+	if (data.userId) return data.userId;
+
+	return null;
+}
+
 export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsServerResponses }: VorionServerParams) => {
 	const appSettings = new Elysia()
 		.error('AUTHENTICATION_ERROR', AuthenticationError)
@@ -143,13 +151,14 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 							eventCallbacks[eventName](data);
 						}
 						if (wsServerResponses && wsServerResponses[eventName]) {
-							if (!data.user_id) {
+							const userId = getUserId(data);
+							if (!userId) {
 								console.log(
-									`⚠️ Error, user id not exist! User id is required for socket communications - ${eventName} \n 🚩🚩🚩 ${JSON.stringify(
+									`⚠️ Error, user id not found! User id is required for socket communications - ${eventName} \n 🚩🚩🚩 ${JSON.stringify(
 										data
 									)}`
 								);
-								throw new InternalServerError(`⚠️ Error, user id not exist! User id is required for socket communications - ${eventName}`);
+								throw new InternalServerError(`⚠️ Error, user id not found! User id is required for socket communications - ${eventName}`);
 							}
 							const responseFunction = wsServerResponses[eventName];
 							const response = await Promise.resolve(responseFunction(data));
