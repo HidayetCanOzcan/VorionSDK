@@ -91,8 +91,8 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 				}
 			},
 			async message(ws, message) {
-				console.log('📑📑📑📑📑', message);
 				const sessionId = ws.data.query.session;
+				console.log('📑📑📑📑📑', sessionId, message);
 				if (typeof sessionId === 'undefined') {
 					console.error('Session ID tanımlı değil.');
 					return;
@@ -153,7 +153,7 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 							}
 							const responseFunction = wsServerResponses[eventName];
 							const response = await Promise.resolve(responseFunction(data));
-							await wsManager.sendMessage(response.event || eventName, response.payload, data.user_id, response.role);
+							await wsManager.sendMessage(data.user_id, response.event || eventName, response.payload, response.role);
 						}
 						set.status = 200;
 						return 'ACK';
