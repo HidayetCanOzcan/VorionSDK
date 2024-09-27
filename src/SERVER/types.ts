@@ -52,10 +52,10 @@ export type EventCallbacks = Partial<{
 	[K in DaprEvents]: (data: unknown) => void;
 }>;
 export type wsServerResponses = Partial<{
-	[K in DaprEvents]: {
+	[K in DaprEvents]: (data: unknown) => {
+		event?: string;
 		payload: any;
 		role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
-		event?: string;
 	};
 }>;
 
