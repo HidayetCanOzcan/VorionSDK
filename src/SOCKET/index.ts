@@ -37,6 +37,7 @@ class VorionWebSocketManager extends EventEmitter {
 
 		this.socket.onmessage = (event) => {
 			const message = JSON.parse(event.data);
+			console.log(`📑📑📑📑`, event);
 			if (Object.values(VorionEvents).includes(message.event as VorionEvents)) {
 				this.emit(message.event, message.payload);
 				this.sendAck(message.ackId);
