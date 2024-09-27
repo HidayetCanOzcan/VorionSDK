@@ -51,12 +51,20 @@ export type WaitingQueue = {
 export type EventCallbacks = Partial<{
 	[K in DaprEvents]: (data: unknown) => void;
 }>;
+export type wsServerResponseFunction = (data: unknown) =>
+	| Promise<{
+			event?: string;
+			payload: any;
+			role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
+	  }>
+	| {
+			event?: string;
+			payload: any;
+			role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
+	  };
+
 export type wsServerResponses = Partial<{
-	[K in DaprEvents]: (data: unknown) => {
-		event?: string;
-		payload: any;
-		role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
-	};
+	[K in DaprEvents]: wsServerResponseFunction;
 }>;
 
 export type VorionServerParams = {
