@@ -91,6 +91,7 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 				}
 			},
 			async message(ws, message) {
+				console.log('📑📑📑📑📑', message);
 				const sessionId = ws.data.query.session;
 				if (typeof sessionId === 'undefined') {
 					console.error('Session ID tanımlı değil.');
