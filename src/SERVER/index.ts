@@ -144,7 +144,11 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 						if (wsServerResponses && wsServerResponses[eventName]) {
 							if (!data.userId) {
 								set.status = 500;
-								console.log(`⚠️ Error, user id not exist! User id is required for socket communications - ${eventName}`);
+								console.log(
+									`⚠️ Error, user id not exist! User id is required for socket communications - ${eventName} \n 🚩🚩🚩 ${JSON.stringify(
+										data
+									)}`
+								);
 								return 'ERR';
 							}
 							const responseFunction = wsServerResponses[eventName];
