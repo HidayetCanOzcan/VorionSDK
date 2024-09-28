@@ -48,9 +48,6 @@ export type WaitingQueue = {
 	[sessionId: string]: WsMessage<unknown>[];
 };
 
-export type EventCallbacks = Partial<{
-	[K in DaprEvents]: (data: unknown) => void;
-}>;
 export type wsServerResponseFunction = (data: unknown) =>
 	| Promise<{
 			event?: string;
@@ -69,7 +66,6 @@ export type wsServerResponses = Partial<{
 
 export type VorionServerParams = {
 	port: number;
-	eventCallbacks?: EventCallbacks;
 	wsServerResponses?: wsServerResponses;
 	listenCallback?: () => void;
 };

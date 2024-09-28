@@ -24,7 +24,7 @@ function findUserId(obj: any): string | null {
 	return null;
 }
 
-export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsServerResponses }: VorionServerParams) => {
+export const createVorionServer = ({ port, listenCallback, wsServerResponses }: VorionServerParams) => {
 	const appSettings = new Elysia()
 		.error('AUTHENTICATION_ERROR', AuthenticationError)
 		.error('AUTHORIZATION_ERROR', AuthorizationError)
@@ -161,13 +161,9 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 						const { data } = await request.json();
 						console.log(`🚩🚩🚩`, data);
 
-						if (eventCallbacks && eventCallbacks[eventName]) {
-							eventCallbacks[eventName](data);
-						}
-
 						if (wsServerResponses && wsServerResponses[eventName]) {
 							const userId = findUserId(data);
-							console.log(`🙋‍♂️🙋‍♀️ Found userId:`, userId);
+							console.log(`🙋‍♂️🙋‍♀️ Found userId for ${eventName}:`, userId);
 
 							if (!userId) {
 								console.log(
@@ -181,8 +177,8 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 							const responseFunction = wsServerResponses[eventName];
 							const response = await Promise.resolve(responseFunction(data));
 
-							if (response && response.event) {
-								await wsManager.sendMessage(userId, response.event, response.payload, response.role);
+							if (response && userId) {
+								await wsManager.sendMessage(userId, response.event || eventName, response.payload, response.role);
 							} else {
 								console.log(`⚠️ Invalid response for event ${eventName}:`, response);
 							}
