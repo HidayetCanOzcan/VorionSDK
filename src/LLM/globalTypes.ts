@@ -14,34 +14,37 @@ export type AgentModelParameters = {
 };
 
 export type PredictionResponse = {
-	content: string;
-	rag_content: string | null;
-	prompt_with_rag_content: null;
-	message_id: string;
-	user_id: string;
-	conversation_id: string;
+	agent_model_parameters: { [key: string]: string | number | string[] } | null;
+	answer: string;
+	conversation_state_key: string;
 	conversation_type: string;
-	role: 'system' | 'assistant' | 'user' | 'human' | 'ai';
-	image_content: string[] | null;
-	send_date_time: string;
-	sources:
-		| {
-				data_source: string;
-				source_type: string;
-		  }[]
-		| null;
-	is_sensitive_info: boolean;
-	message_advanced_options: {
-		conversation_state_key: string;
-		llm_type: LLMOptions;
-		llm_group_name: LLMGroupNameOptions;
-		system_message: string;
-		memory_type: MemoryOptions;
-		memory_strategy: MemoryStrategyOptions;
-		load_balance_strategy: LoadBalanceStrategyOptions;
-		search_in_vector_store: boolean;
-		vector_store_retrieve_count: number;
-		search_in_index_store: boolean;
-		index_store_retrieve_count: number;
-	};
+	images: string[] | null;
+	llm_group_name: LLMGroupNameOptions;
+	llm_name: LLMOptions;
+	load_balancer_strategy_name: LoadBalanceStrategyOptions;
+	memory_strategy_name: MemoryStrategyOptions;
+	memory_type: MemoryOptions;
+	persona_system_message: string | null;
+	prompt: Prompt;
+	prompt_with_rag_content: string | null;
+	rag_content: string | null;
+	sources: Source[] | null;
+	system_message: string;
+	user_id: string;
+	user_info_system_message: string;
+};
+export type Source = {
+	data_source: string;
+	source_type: string;
+};
+export type Prompt = {
+	analyse_image: boolean;
+	create_image: boolean;
+	image_quality: string;
+	image_size: string;
+	image_style: string;
+	rag_content: string | null;
+	save_prompt_with_rag_content: boolean;
+	sensitive_info: boolean;
+	text: string;
 };
