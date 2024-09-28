@@ -36,13 +36,13 @@ export type EventDataTypesMap = {
 	[DaprEvents.PREDICTION_COMPLETE]: PredictionResponse;
 	[DaprEvents.INGEST_DOCUMENTS_SUCCEEDED]: IngestResponse;
 	[DaprEvents.PREDICTION_FAILED]: unknown;
-	[DaprEvents.INGEST_DOCUMENTS_LOADED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_LOADED]: IngestResponse;
 	[DaprEvents.INGEST_DOCUMENTS_LOADED_ERROR]: unknown;
-	[DaprEvents.INGEST_DOCUMENTS_SPLITTED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_SPLITTED]: IngestResponse;
 	[DaprEvents.INGEST_DOCUMENTS_SPLITTED_ERROR]: unknown;
-	[DaprEvents.INGEST_DOCUMENTS_EMBEDDED_AND_STORED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_EMBEDDED_AND_STORED]: IngestResponse;
 	[DaprEvents.INGEST_DOCUMENTS_EMBEDDED_AND_STORED_ERROR]: unknown;
-	[DaprEvents.INGEST_DOCUMENTS_INDEXED_AND_STORED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_INDEXED_AND_STORED]: IngestResponse;
 	[DaprEvents.INGEST_DOCUMENTS_INDEXED_AND_STORED_ERROR]: unknown;
 	[DaprEvents.INGEST_DOCUMENTS_FAILED]: unknown;
 	[DaprEvents.INGEST_DOCUMENTS_SUCCEEDED_WITH_PARTIAL_ERROR]: unknown;
