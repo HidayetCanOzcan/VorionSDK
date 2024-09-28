@@ -79,7 +79,8 @@ export type wsServerResponseFunction<T extends KnownDaprEvents> = (data: EventDa
 			event?: string;
 			payload: any;
 			role?: 'system' | 'assistant' | 'user' | 'human' | 'ai';
-	  };
+	  }
+	| void;
 
 export type wsServerResponses = Partial<{
 	[K in KnownDaprEvents]: wsServerResponseFunction<K>;
