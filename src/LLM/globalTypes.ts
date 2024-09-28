@@ -14,18 +14,22 @@ export type AgentModelParameters = {
 };
 
 export type PredictionResponse = {
-	//TODO: null values will be updated
 	content: string;
-	rag_content: null;
+	rag_content: string | null;
 	prompt_with_rag_content: null;
 	message_id: string;
 	user_id: string;
 	conversation_id: string;
 	conversation_type: string;
 	role: 'system' | 'assistant' | 'user' | 'human' | 'ai';
-	image_content: null;
+	image_content: string[] | null;
 	send_date_time: string;
-	sources: null;
+	sources:
+		| {
+				data_source: string;
+				source_type: string;
+		  }[]
+		| null;
 	is_sensitive_info: boolean;
 	message_advanced_options: {
 		conversation_state_key: string;

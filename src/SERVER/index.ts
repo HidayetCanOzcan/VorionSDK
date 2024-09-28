@@ -1,19 +1,28 @@
 import { cors } from '@elysiajs/cors';
-import { DaprEvents, Events, Sessions, VorionServerParams, WaitingQueue, WsMessage } from './types';
+import {
+	DaprEvents,
+	EventDataTypesMap,
+	Events,
+	Sessions,
+	VorionServerParams,
+	WaitingQueue,
+	WsMessage,
+	wsServerResponseFunction,
+} from './types';
 import Elysia from 'elysia';
 import { AuthenticationError, AuthorizationError, InternalServerError, InvariantError, NotFoundError } from './exceptions';
 import { wsManager } from './WebSocketManager';
+import { PredictionResponse } from '../LLM/globalTypes';
+import { IngestResponse } from '../RAG/globalTypes';
 
-function findUserId(obj: any): string | null {
+function findUserId(obj: any): string | undefined {
 	if (typeof obj !== 'object' || obj === null) {
-		return null;
+		return undefined;
 	}
 
-	// Doğrudan user_id veya userId kontrolü
-	if (obj.user_id) return obj.user_id;
-	if (obj.userId) return obj.userId;
+	if (typeof obj.user_id === 'string') return obj.user_id;
+	if (typeof obj.userId === 'string') return obj.userId;
 
-	// Nesne içinde recursive arama
 	for (const key in obj) {
 		if (typeof obj[key] === 'object') {
 			const result = findUserId(obj[key]);
@@ -21,7 +30,7 @@ function findUserId(obj: any): string | null {
 		}
 	}
 
-	return null;
+	return undefined;
 }
 
 export const createVorionServer = ({ port, listenCallback, wsServerResponses }: VorionServerParams) => {
@@ -158,7 +167,7 @@ export const createVorionServer = ({ port, listenCallback, wsServerResponses }: 
 				app.post(`/${eventName}`, async ({ request, set }) => {
 					try {
 						console.log(`📑 Triggered Event: ${eventName}`);
-						const { data } = await request.json();
+						const { data } = (await request.json()) as { data: EventDataTypesMap[typeof eventName] };
 						console.log(`🚩🚩🚩`, data);
 
 						if (wsServerResponses && wsServerResponses[eventName]) {
@@ -174,7 +183,7 @@ export const createVorionServer = ({ port, listenCallback, wsServerResponses }: 
 								throw new InternalServerError(`⚠️ Error, user id not found! User id is required for socket communications - ${eventName}`);
 							}
 
-							const responseFunction = wsServerResponses[eventName];
+							const responseFunction = wsServerResponses[eventName] as wsServerResponseFunction<typeof eventName>;
 							const response = await Promise.resolve(responseFunction(data));
 
 							if (response && userId) {
@@ -187,7 +196,7 @@ export const createVorionServer = ({ port, listenCallback, wsServerResponses }: 
 						set.status = 200;
 						return 'ACK';
 					} catch (error) {
-						console.log('⚠️📬 Error:', error);
+						console.error('⚠️📬 Error:', error instanceof Error ? error.message : String(error));
 						set.status = 500;
 						return 'ERR';
 					}

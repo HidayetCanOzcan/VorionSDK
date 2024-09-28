@@ -1,3 +1,6 @@
+import { PredictionResponse } from '../LLM/globalTypes';
+import { IngestResponse } from '../RAG/globalTypes';
+
 export enum Events {
 	SEND_MESSAGE_HISTORY = 'send-message-history',
 	SEND_CONVERSATIONS = 'send-conversations',
@@ -29,6 +32,24 @@ export enum DaprEvents {
 	AGENT_TASK_FAILED = 'agent-task-failed',
 }
 
+export type EventDataTypesMap = {
+	[DaprEvents.PREDICTION_COMPLETE]: PredictionResponse;
+	[DaprEvents.INGEST_DOCUMENTS_SUCCEEDED]: IngestResponse;
+	[DaprEvents.PREDICTION_FAILED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_LOADED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_LOADED_ERROR]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_SPLITTED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_SPLITTED_ERROR]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_EMBEDDED_AND_STORED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_EMBEDDED_AND_STORED_ERROR]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_INDEXED_AND_STORED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_INDEXED_AND_STORED_ERROR]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_FAILED]: unknown;
+	[DaprEvents.INGEST_DOCUMENTS_SUCCEEDED_WITH_PARTIAL_ERROR]: unknown;
+	[DaprEvents.AGENT_TASK_COMPLETED]: unknown;
+	[DaprEvents.AGENT_TASK_FAILED]: unknown;
+};
+
 export type WsMessage<T> = {
 	event: Events;
 	payload?: T;
@@ -47,8 +68,8 @@ export type Sessions = {
 export type WaitingQueue = {
 	[sessionId: string]: WsMessage<unknown>[];
 };
-
-export type wsServerResponseFunction = (data: unknown) =>
+type KnownDaprEvents = keyof EventDataTypesMap;
+export type wsServerResponseFunction<T extends KnownDaprEvents> = (data: EventDataTypesMap[T]) =>
 	| Promise<{
 			event?: string;
 			payload: any;
@@ -61,7 +82,7 @@ export type wsServerResponseFunction = (data: unknown) =>
 	  };
 
 export type wsServerResponses = Partial<{
-	[K in DaprEvents]: wsServerResponseFunction;
+	[K in KnownDaprEvents]: wsServerResponseFunction<K>;
 }>;
 
 export type VorionServerParams = {
