@@ -12,8 +12,6 @@ import {
 import Elysia from 'elysia';
 import { AuthenticationError, AuthorizationError, InternalServerError, InvariantError, NotFoundError } from './exceptions';
 import { wsManager } from './WebSocketManager';
-import { PredictionResponse } from '../LLM/globalTypes';
-import { IngestResponse } from '../RAG/globalTypes';
 
 function findUserId(obj: any): string | undefined {
 	if (typeof obj !== 'object' || obj === null) {
