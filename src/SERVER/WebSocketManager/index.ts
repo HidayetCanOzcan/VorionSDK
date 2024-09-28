@@ -26,6 +26,10 @@ class WebSocketManager {
 	}
 
 	public async sendMessage(userId: string, event: string, payload: any, role: string = 'system'): Promise<void> {
+		if (!userId || !event) {
+			console.log(`⚠️ Invalid sendMessage parameters: userId=${userId}, event=${event}`);
+			return;
+		}
 		const socket = await this.getSocket(userId);
 		socket.send(
 			JSON.stringify({

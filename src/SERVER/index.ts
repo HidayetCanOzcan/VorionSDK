@@ -160,12 +160,15 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 						console.log(`📑 Triggered Event: ${eventName}`);
 						const { data } = await request.json();
 						console.log(`🚩🚩🚩`, data);
+
 						if (eventCallbacks && eventCallbacks[eventName]) {
 							eventCallbacks[eventName](data);
 						}
+
 						if (wsServerResponses && wsServerResponses[eventName]) {
 							const userId = findUserId(data);
-							console.log(`🙋‍♂️🙋‍♀️`, userId);
+							console.log(`🙋‍♂️🙋‍♀️ Found userId:`, userId);
+
 							if (!userId) {
 								console.log(
 									`⚠️ Error, user id not found! User id is required for socket communications - ${eventName} \n 🚩🚩🚩 ${JSON.stringify(
@@ -174,14 +177,21 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 								);
 								throw new InternalServerError(`⚠️ Error, user id not found! User id is required for socket communications - ${eventName}`);
 							}
+
 							const responseFunction = wsServerResponses[eventName];
 							const response = await Promise.resolve(responseFunction(data));
-							await wsManager.sendMessage(data.user_id, response.event || eventName, response.payload, response.role);
+
+							if (response && response.event) {
+								await wsManager.sendMessage(userId, response.event, response.payload, response.role);
+							} else {
+								console.log(`⚠️ Invalid response for event ${eventName}:`, response);
+							}
 						}
+
 						set.status = 200;
 						return 'ACK';
 					} catch (error) {
-						console.log('⚠️📬', error);
+						console.log('⚠️📬 Error:', error);
 						set.status = 500;
 						return 'ERR';
 					}
