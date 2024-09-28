@@ -4,10 +4,22 @@ import Elysia from 'elysia';
 import { AuthenticationError, AuthorizationError, InternalServerError, InvariantError, NotFoundError } from './exceptions';
 import { wsManager } from './WebSocketManager';
 
-function getUserId(data: any): string | null {
-	if (data.user_id) return data.user_id;
-	if (data.ingest_response_model && data.ingest_response_model.user_id) return data.ingest_response_model.user_id;
-	if (data.userId) return data.userId;
+function findUserId(obj: any): string | null {
+	if (typeof obj !== 'object' || obj === null) {
+		return null;
+	}
+
+	// Doğrudan user_id veya userId kontrolü
+	if (obj.user_id) return obj.user_id;
+	if (obj.userId) return obj.userId;
+
+	// Nesne içinde recursive arama
+	for (const key in obj) {
+		if (typeof obj[key] === 'object') {
+			const result = findUserId(obj[key]);
+			if (result) return result;
+		}
+	}
 
 	return null;
 }
@@ -151,7 +163,8 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 							eventCallbacks[eventName](data);
 						}
 						if (wsServerResponses && wsServerResponses[eventName]) {
-							const userId = getUserId(data);
+							const userId = findUserId(data);
+							console.log(`🙋‍♂️🙋‍♀️`, userId);
 							if (!userId) {
 								console.log(
 									`⚠️ Error, user id not found! User id is required for socket communications - ${eventName} \n 🚩🚩🚩 ${JSON.stringify(
