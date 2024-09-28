@@ -112,7 +112,7 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 			},
 			async message(ws, message) {
 				const sessionId = ws.data.query.session;
-				console.log('📑📑📑📑📑', sessionId, message);
+				console.log('📑📬', sessionId, message);
 				if (typeof sessionId === 'undefined') {
 					console.error('Session ID tanımlı değil.');
 					return;
@@ -159,6 +159,7 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 					try {
 						console.log(`📑 Triggered Event: ${eventName}`);
 						const { data } = await request.json();
+						console.log(`🚩🚩🚩`, data);
 						if (eventCallbacks && eventCallbacks[eventName]) {
 							eventCallbacks[eventName](data);
 						}
@@ -180,6 +181,7 @@ export const createVorionServer = ({ port, eventCallbacks, listenCallback, wsSer
 						set.status = 200;
 						return 'ACK';
 					} catch (error) {
+						console.log('⚠️📬', error);
 						set.status = 500;
 						return 'ERR';
 					}
