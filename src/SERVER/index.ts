@@ -1,3 +1,6 @@
+if (typeof window !== 'undefined') {
+	throw new Error('Server-side code cannot be run in a browser environment');
+}
 import { cors } from '@elysiajs/cors';
 import {
 	DaprEvents,
