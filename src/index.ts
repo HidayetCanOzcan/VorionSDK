@@ -1,3 +1,7 @@
+export * as VorionEnums from './globalEnums';
+export * as LlmGlobalTypes from './LLM/globalTypes';
+
+// Client exports
 export * as RAGEmbedTypes from './RAG/methods/embed/types';
 export * as RAGAembedTypes from './RAG/methods/aembed/types';
 export * as RAGIngestTypes from './RAG/methods/ingest/types';
@@ -21,13 +25,18 @@ export * as PredictTypes from './LLM/methods/predict/types';
 
 export * as SocketTypes from './SOCKET/types';
 
-export * as VorionEnums from './globalEnums';
-
-export * as LlmGlobalTypes from './LLM/globalTypes';
-
-export * as VorionServerTypes from './SERVER/types';
-
 export { default as VorionRAGSDK } from './RAG';
 export { default as VorionLLMSDK } from './LLM';
 export { default as VorionWebSocket } from './SOCKET';
-export { createVorionServer } from './SERVER';
+
+// Conditional server exports
+if (typeof window === 'undefined') {
+	const { createVorionServer } = require('./SERVER');
+	const VorionServerTypes = require('./SERVER/types');
+
+	module.exports = {
+		...module.exports,
+		createVorionServer,
+		VorionServerTypes,
+	};
+}
