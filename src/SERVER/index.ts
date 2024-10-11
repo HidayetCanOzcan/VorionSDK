@@ -38,6 +38,7 @@ function findUserId(obj: any): string | undefined {
 }
 
 export const createVorionServer = ({ port, listenCallback, wsServerResponses }: VorionServerParams) => {
+	console.log('⚠️⚠️⚠️⚠️', Elysia);
 	const appSettings = new Elysia()
 		.error('AUTHENTICATION_ERROR', AuthenticationError)
 		.error('AUTHORIZATION_ERROR', AuthorizationError)
