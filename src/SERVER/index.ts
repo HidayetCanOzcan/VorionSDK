@@ -27,7 +27,10 @@ function findUserId(obj: any): string | undefined {
 	for (const key in obj) {
 		if (typeof obj[key] === 'object') {
 			const result = findUserId(obj[key]);
-			if (result) return result;
+			if (result) {
+				const user_id = obj.conversation_type === 'widget' ? `${result}:${obj.conversation_state_key}` : result;
+				return user_id;
+			}
 		}
 	}
 
