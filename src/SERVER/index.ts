@@ -22,16 +22,16 @@ function findUserId(obj: any): string | undefined {
 		return undefined;
 	}
 
-	if (typeof obj.user_id === 'string') return obj.user_id;
-	if (typeof obj.userId === 'string') return obj.userId;
+	if (typeof obj.user_id === 'string')
+		return obj.conversation_type === 'widget' ? `${obj.user_id}:${obj.conversation_state_key}` : obj.user_id;
+	if (typeof obj.userId === 'string')
+		return obj.conversation_type === 'widget' ? `${obj.userId}:${obj.conversation_state_key}` : obj.userId;
 
 	for (const key in obj) {
 		if (typeof obj[key] === 'object') {
 			const result = findUserId(obj[key]);
 			if (result) {
-				const user_id = obj.conversation_type === 'widget' ? `${result}:${obj.conversation_state_key}` : result;
-				console.log(`Returning user 🙋‍♂️`, user_id);
-				return user_id;
+				return obj.conversation_type === 'widget' ? `${result}:${obj.conversation_state_key}` : result;
 			}
 		}
 	}
