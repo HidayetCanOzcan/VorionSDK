@@ -1,6 +1,6 @@
 {
 	"name": "vorion-sdk",
-	"version": "0.8.5",
+	"version": "0.8.6",
 	"description": "A comprehensive TypeScript SDK for interacting with the VORION Rag & LLM  Apis, supporting both REST and WebSocket interfaces.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -51,10 +51,5 @@
 		"@types/uuid": "^10.0.0",
 		"elysia": "^1.1.16",
 		"uuid": "^10.0.0"
-	},
-	"browser": {
-		"@dapr/dapr": false,
-		"@elysiajs/cors": false,
-		"elysia": false
 	}
 }
