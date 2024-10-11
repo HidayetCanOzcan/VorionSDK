@@ -12,7 +12,7 @@ import {
 	WsMessage,
 	wsServerResponseFunction,
 } from './types';
-import Elysia from 'elysia';
+import { Elysia } from 'elysia';
 import { AuthenticationError, AuthorizationError, InternalServerError, InvariantError, NotFoundError } from './exceptions';
 import { wsManager } from './WebSocketManager';
 
