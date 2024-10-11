@@ -1,6 +1,6 @@
-// if (typeof window !== 'undefined') {
-// 	throw new Error('Server-side code cannot be run in a browser environment');
-// }
+if (typeof window !== 'undefined') {
+	throw new Error('Server-side code cannot be run in a browser environment');
+}
 import { cors } from '@elysiajs/cors';
 import {
 	DaprEvents,
@@ -17,6 +17,7 @@ import { AuthenticationError, AuthorizationError, InternalServerError, Invariant
 import { wsManager } from './WebSocketManager';
 
 function findUserId(obj: any): string | undefined {
+	console.log(`Looking in 🧐`, obj);
 	if (typeof obj !== 'object' || obj === null) {
 		return undefined;
 	}
@@ -29,6 +30,7 @@ function findUserId(obj: any): string | undefined {
 			const result = findUserId(obj[key]);
 			if (result) {
 				const user_id = obj.conversation_type === 'widget' ? `${result}:${obj.conversation_state_key}` : result;
+				console.log(`Returning user 🙋‍♂️`, user_id);
 				return user_id;
 			}
 		}

@@ -51,5 +51,10 @@
 		"@types/uuid": "^10.0.0",
 		"elysia": "^1.1.16",
 		"uuid": "^10.0.0"
+	},
+	"browser": {
+		"@dapr/dapr": false,
+		"@elysiajs/cors": false,
+		"elysia": false
 	}
 }
