@@ -19,9 +19,9 @@ export interface IngestMultipartData {
 	language: string;
 	embed_documents: boolean;
 	index_documents: boolean;
-	loaded_documents_state_key: string;
-	save_loaded_documents: boolean;
-	load_documents_from_state: boolean;
-	load_balance_strategy: LoadBalanceStrategyOptions;
+	loaded_documents_state_key?: string;
+	save_loaded_documents?: boolean;
+	load_documents_from_state?: boolean;
+	load_balance_strategy?: LoadBalanceStrategyOptions;
 	user_id: string;
 }
