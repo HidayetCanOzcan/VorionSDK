@@ -1,3 +1,5 @@
+import { SplitterTypeOptions } from '../../../globalEnums';
+
 export type DataSource = {
 	title?: string;
 	type: 'file' | 'url' | 'website' | 'youtube' | 'github';
@@ -5,11 +7,11 @@ export type DataSource = {
 	metadata: Record<string, string | number | boolean>;
 	parameters: Record<string, unknown> & { use_selenium?: boolean };
 	splitter_settings?: {
-		chunk_size?: number;
-		chunk_overlap?: number;
+		chunkSize?: number;
+		chunkOverlap?: number;
 		separator?: string;
 		language?: string;
-		splitter_type?: string;
+		splitterType?: SplitterTypeOptions;
 	};
 };
 
