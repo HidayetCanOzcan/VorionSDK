@@ -7,10 +7,20 @@ import { IngestMultipartRequest } from './types';
 export function ingestMultipartMethod(baseUrl: string, customFetch: typeof CustomFetch) {
 	return async function (request: IngestMultipartRequest): Promise<CustomFetchReturnType<IngestResponse, ApiError>> {
 		const formData = new FormData();
-		formData.append('data', request.data);
-		request.files.forEach((file, index) => {
-			formData.append(`file${index}`, file);
-		});
+		const { data, files } = request;
+		formData.append('data', JSON.stringify(data));
+
+		if (Array.isArray(files)) {
+			for (const file of files) {
+				const arrayBuffer = await file.arrayBuffer();
+				const blob = new Blob([arrayBuffer], { type: file.type });
+				formData.append('files', blob, file.name);
+			}
+		} else if (files) {
+			const arrayBuffer = await (files as File).arrayBuffer();
+			const blob = new Blob([arrayBuffer], { type: (files as File).type });
+			formData.append('files', blob, (files as File).name);
+		}
 
 		const options: OptionsType = {
 			url: `${baseUrl}/api/v1/ingest-multipart`,

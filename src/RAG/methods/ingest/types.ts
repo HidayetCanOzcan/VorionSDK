@@ -1,9 +1,9 @@
 export type DataSource = {
 	title?: string;
-	type: string;
+	type: 'file' | 'url' | 'website' | 'youtube' | 'github';
 	target: string;
 	metadata: Record<string, string | number | boolean>;
-	parameters: Record<string, unknown>;
+	parameters: Record<string, unknown> & { use_selenium?: boolean };
 	splitter_settings?: {
 		chunk_size?: number;
 		chunk_overlap?: number;
