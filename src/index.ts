@@ -31,6 +31,7 @@ export { default as VorionRAGSDK } from './RAG';
 export { default as VorionLLMSDK } from './LLM';
 export { default as VorionWebSocket } from './SOCKET';
 export { createVorionServer } from './SERVER';
+export { default as VorionSTATE } from './STATE';
 
 // Conditional server exports
 // if (typeof window === 'undefined') {
