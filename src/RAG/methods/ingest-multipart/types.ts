@@ -3,7 +3,7 @@ import { DataSource } from '../ingest/types';
 
 export type IngestMultipartRequest = {
 	data: IngestMultipartData;
-	files: File[];
+	files: File[] | File;
 };
 export interface IngestMultipartData {
 	indexer_name: IndexerOptions;
