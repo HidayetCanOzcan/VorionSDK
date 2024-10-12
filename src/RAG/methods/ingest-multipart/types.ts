@@ -9,7 +9,7 @@ export interface IngestMultipartData {
 	indexer_name: IndexerOptions;
 	embedder_name: EmbedderOptions;
 	vectorstore_name: VectorStoreOptions;
-	data_sources: DataSource[];
+	data_sources: DataSource[] | null;
 	persist_directory: string;
 	collection_name: string;
 	preferred_splitter_type: SplitterTypeOptions;
