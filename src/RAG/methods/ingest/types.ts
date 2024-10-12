@@ -1,7 +1,7 @@
 export type DataSource = {
 	title?: string;
 	type: 'file' | 'url' | 'website' | 'youtube' | 'github';
-	target: string;
+	target: string | string[];
 	metadata: Record<string, string | number | boolean>;
 	parameters: Record<string, unknown> & { use_selenium?: boolean };
 	splitter_settings?: {
