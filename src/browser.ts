@@ -1,9 +1,6 @@
-// Re-export all browser-safe exports
-export * from './browser';
-
-// Server-only exports
-export { createVorionServer } from './SERVER';
-export * as VorionServerTypes from './SERVER/types';
+// Browser-safe exports
+export * as VorionEnums from './globalEnums';
+export * as LlmGlobalTypes from './LLM/globalTypes';
 
 // Client exports
 export * as RAGEmbedTypes from './RAG/methods/embed/types';
@@ -29,19 +26,15 @@ export * as PredictTypes from './LLM/methods/predict/types';
 
 export * as SocketTypes from './SOCKET/types';
 
-export { default as VorionRAGSDK } from './RAG';
-export { default as VorionLLMSDK } from './LLM';
-export { default as VorionWebSocket } from './SOCKET';
-export { default as VorionSTATE } from './STATE';
+// Client-side SDK exports
+import VorionRAGSDK from './RAG/browser-sdk';
+import VorionLLMSDK from './LLM/browser-sdk';
+import VorionWebSocket from './SOCKET/browser-sdk';
+import VorionSTATE from './STATE';
 
-// Conditional server exports
-// if (typeof window === 'undefined') {
-// 	const { createVorionServer } = require('./SERVER');
-// 	const VorionServerTypes = require('./SERVER/types');
-
-// 	module.exports = {
-// 		...module.exports,
-// 		createVorionServer,
-// 		VorionServerTypes,
-// 	};
-// }
+export {
+  VorionRAGSDK,
+  VorionLLMSDK,
+  VorionWebSocket,
+  VorionSTATE
+};

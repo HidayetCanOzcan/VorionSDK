@@ -1,6 +1,6 @@
 {
 	"name": "vorion-sdk",
-	"version": "0.8.20",
+	"version": "0.8.28",
 	"description": "A comprehensive TypeScript SDK for interacting with the VORION Rag & LLM  Apis, supporting both REST and WebSocket interfaces.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,17 +9,26 @@
 		"prepublishOnly": "npm run build",
 		"test": "jest",
 		"example": "npm run build && node --env-file=.env ./dist/example/index.js",
-		"publish-patch": "npm version patch && npm publish"
+		"publish-patch": "npm version patch && npm publish",
+		"publish-sdk": "bash ./scripts/publish.sh"
 	},
 	"exports": {
 		".": {
-			"import": "./dist/index.js",
-			"require": "./dist/index.js",
+			"browser": {
+				"import": "./dist/browser.js",
+				"require": "./dist/browser.js"
+			},
+			"node": {
+				"import": "./dist/index.js",
+				"require": "./dist/index.js"
+			},
+			"default": "./dist/browser.js",
 			"types": "./dist/index.d.ts"
 		}
 	},
 	"files": [
-		"dist"
+		"dist",
+		"src"
 	],
 	"repository": {
 		"type": "git",
@@ -46,16 +55,23 @@
 		"ts-jest": "^29.1.5",
 		"typescript": "^5.5.2"
 	},
-	"dependencies": {
-		"@dapr/dapr": "^3.4.1",
-		"@elysiajs/cors": "^1.1.1",
-		"@types/uuid": "^10.0.0",
-		"elysia": "^1.1.16",
-		"uuid": "^10.0.0"
-	},
 	"browser": {
+		"./dist/index.js": "./dist/browser.js",
+		"./dist/LLM/index.js": "./dist/LLM/browser-sdk.js",
+		"./dist/RAG/index.js": "./dist/RAG/browser-sdk.js",
+		"./dist/SOCKET/index.js": "./dist/SOCKET/browser-sdk.js",
+		"./dist/LLM/methods/predict/index.js": "./dist/LLM/methods/predict/browser.js",
 		"@dapr/dapr": false,
 		"@elysiajs/cors": false,
 		"elysia": false
+	},
+	"dependencies": {
+		"@types/uuid": "^10.0.0",
+		"uuid": "^10.0.0"
+	},
+	"peerDependencies": {
+		"@dapr/dapr": "^3.4.1",
+		"@elysiajs/cors": "^1.1.1",
+		"elysia": "^1.1.16"
 	}
 }
