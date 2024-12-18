@@ -6,19 +6,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Mevcut branch'i kontrol et
-BRANCH=$(git branch --show-current)
-if [ "$BRANCH" != "main" ] && [ "$BRANCH" != "master" ]; then
-    echo -e "${RED}Error: You must be on main or master branch to publish${NC}"
-    exit 1
-fi
-
-# Değişiklikleri kontrol et
-if [ -n "$(git status --porcelain)" ]; then
-    echo -e "${RED}Error: You have uncommitted changes${NC}"
-    exit 1
-fi
-
 # Versiyon tipini al
 echo -e "${YELLOW}Select version bump type:${NC}"
 echo "1) patch (0.0.x) - Bug fixes"
@@ -52,17 +39,9 @@ fi
 
 # Version bump
 echo -e "\n${YELLOW}Bumping version...${NC}"
-npm version $VERSION_TYPE
+npm version $VERSION_TYPE --no-git-tag-version
 if [ $? -ne 0 ]; then
     echo -e "${RED}Version bump failed${NC}"
-    exit 1
-fi
-
-# Push to remote
-echo -e "\n${YELLOW}Pushing to remote...${NC}"
-git push && git push --tags
-if [ $? -ne 0 ]; then
-    echo -e "${RED}Push failed${NC}"
     exit 1
 fi
 

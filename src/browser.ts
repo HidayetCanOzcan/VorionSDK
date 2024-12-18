@@ -30,11 +30,9 @@ export * as SocketTypes from './SOCKET/types';
 import VorionRAGSDK from './RAG/browser-sdk';
 import VorionLLMSDK from './LLM/browser-sdk';
 import VorionWebSocket from './SOCKET/browser-sdk';
-import VorionSTATE from './STATE';
 
 export {
   VorionRAGSDK,
   VorionLLMSDK,
-  VorionWebSocket,
-  VorionSTATE
+  VorionWebSocket
 };

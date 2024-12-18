@@ -5,14 +5,16 @@ import type { PredictRequest, PredictResponse } from './methods/predict/types';
 import type { ApiError } from './methods/files/types';
 
 class VorionLLMSDK {
-    private customFetch: typeof CustomFetch;
+    private baseUrl: string;
+    private predict: ReturnType<typeof predictMethod>;
 
-    constructor(customFetch: typeof CustomFetch) {
-        this.customFetch = customFetch;
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl;
+        this.predict = predictMethod(this.baseUrl, CustomFetch);
     }
 
-    predict(request: PredictRequest): Promise<CustomFetchReturnType<PredictResponse, ApiError>> {
-        return predictMethod(this.customFetch, request);
+    async predictText(request: PredictRequest): Promise<CustomFetchReturnType<PredictResponse, ApiError>> {
+        return this.predict(request);
     }
 }
 

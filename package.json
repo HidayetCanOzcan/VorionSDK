@@ -1,77 +1,209 @@
 {
-	"name": "vorion-sdk",
-	"version": "0.8.30",
-	"description": "A comprehensive TypeScript SDK for interacting with the VORION Rag & LLM  Apis, supporting both REST and WebSocket interfaces.",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"scripts": {
-		"build": "tsc",
-		"prepublishOnly": "npm run build",
-		"test": "jest",
-		"example": "npm run build && node --env-file=.env ./dist/example/index.js",
-		"publish-patch": "npm version patch && npm publish",
-		"publish-sdk": "bash ./scripts/publish.sh"
-	},
-	"exports": {
-		".": {
-			"browser": {
-				"import": "./dist/browser.js",
-				"require": "./dist/browser.js"
-			},
-			"node": {
-				"import": "./dist/index.js",
-				"require": "./dist/index.js"
-			},
-			"default": "./dist/browser.js",
-			"types": "./dist/index.d.ts"
-		}
-	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/HidayetCanOzcan/VorionSDK.git"
-	},
-	"homepage": "https://github.com/HidayetCanOzcan/VorionSDK#readme",
-	"keywords": [
-		"pair",
-		"vorion",
-		"llm",
-		"typescript",
-		"api",
-		"sdk",
-		"ai",
-		"websockets"
-	],
-	"author": "Hidayet Can Özcan",
-	"license": "ISC",
-	"devDependencies": {
-		"@types/jest": "^29.5.12",
-		"@types/node": "^20.14.9",
-		"@types/react": "^18.3.10",
-		"jest": "^29.7.0",
-		"ts-jest": "^29.1.5",
-		"typescript": "^5.5.2"
-	},
-	"browser": {
-		"./dist/index.js": "./dist/browser.js",
-		"./dist/LLM/index.js": "./dist/LLM/browser-sdk.js",
-		"./dist/RAG/index.js": "./dist/RAG/browser-sdk.js",
-		"./dist/SOCKET/index.js": "./dist/SOCKET/browser-sdk.js",
-		"./dist/LLM/methods/predict/index.js": "./dist/LLM/methods/predict/browser.js",
-		"@dapr/dapr": false,
-		"@elysiajs/cors": false,
-		"elysia": false
-	},
-	"dependencies": {
-		"@types/uuid": "^10.0.0",
-		"uuid": "^10.0.0"
-	},
-	"peerDependencies": {
-		"@dapr/dapr": "^3.4.1",
-		"@elysiajs/cors": "^1.1.1",
-		"elysia": "^1.1.16"
-	}
+    "name": "vorion-sdk",
+    "version": "0.8.38",
+    "description": "A comprehensive TypeScript SDK for interacting with the VORION Rag & LLM  Apis, supporting both REST and WebSocket interfaces.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "prepublishOnly": "npm run build",
+        "test": "jest",
+        "example": "npm run build && node --env-file=.env ./dist/example/index.js",
+        "publish-patch": "npm version patch && npm publish",
+        "publish-sdk": "bash ./scripts/publish.sh"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "browser": "./dist/browser.js",
+            "node": "./dist/index.js",
+            "default": "./dist/browser.js",
+            "import": "./dist/browser.js",
+            "require": "./dist/browser.js"
+        },
+        "./dist/globalEnums": {
+            "types": "./dist/globalEnums.d.ts",
+            "default": "./dist/globalEnums.js",
+            "import": "./dist/globalEnums.js",
+            "require": "./dist/globalEnums.js"
+        },
+        "./dist/LLM/globalTypes": {
+            "types": "./dist/LLM/globalTypes.d.ts",
+            "default": "./dist/LLM/globalTypes.js",
+            "import": "./dist/LLM/globalTypes.js",
+            "require": "./dist/LLM/globalTypes.js"
+        },
+        "./dist/RAG/methods/embed/types": {
+            "types": "./dist/RAG/methods/embed/types.d.ts",
+            "default": "./dist/RAG/methods/embed/types.js",
+            "import": "./dist/RAG/methods/embed/types.js",
+            "require": "./dist/RAG/methods/embed/types.js"
+        },
+        "./dist/RAG/methods/aembed/types": {
+            "types": "./dist/RAG/methods/aembed/types.d.ts",
+            "default": "./dist/RAG/methods/aembed/types.js",
+            "import": "./dist/RAG/methods/aembed/types.js",
+            "require": "./dist/RAG/methods/aembed/types.js"
+        },
+        "./dist/RAG/methods/ingest/types": {
+            "types": "./dist/RAG/methods/ingest/types.d.ts",
+            "default": "./dist/RAG/methods/ingest/types.js",
+            "import": "./dist/RAG/methods/ingest/types.js",
+            "require": "./dist/RAG/methods/ingest/types.js"
+        },
+        "./dist/RAG/methods/ingest-query-state/types": {
+            "types": "./dist/RAG/methods/ingest-query-state/types.d.ts",
+            "default": "./dist/RAG/methods/ingest-query-state/types.js",
+            "import": "./dist/RAG/methods/ingest-query-state/types.js",
+            "require": "./dist/RAG/methods/ingest-query-state/types.js"
+        },
+        "./dist/RAG/methods/ingest-rollback/types": {
+            "types": "./dist/RAG/methods/ingest-rollback/types.d.ts",
+            "default": "./dist/RAG/methods/ingest-rollback/types.js",
+            "import": "./dist/RAG/methods/ingest-rollback/types.js",
+            "require": "./dist/RAG/methods/ingest-rollback/types.js"
+        },
+        "./dist/RAG/methods/ingest-multipart/types": {
+            "types": "./dist/RAG/methods/ingest-multipart/types.d.ts",
+            "default": "./dist/RAG/methods/ingest-multipart/types.js",
+            "import": "./dist/RAG/methods/ingest-multipart/types.js",
+            "require": "./dist/RAG/methods/ingest-multipart/types.js"
+        },
+        "./dist/RAG/methods/aingest/types": {
+            "types": "./dist/RAG/methods/aingest/types.d.ts",
+            "default": "./dist/RAG/methods/aingest/types.js",
+            "import": "./dist/RAG/methods/aingest/types.js",
+            "require": "./dist/RAG/methods/aingest/types.js"
+        },
+        "./dist/RAG/methods/load/types": {
+            "types": "./dist/RAG/methods/load/types.d.ts",
+            "default": "./dist/RAG/methods/load/types.js",
+            "import": "./dist/RAG/methods/load/types.js",
+            "require": "./dist/RAG/methods/load/types.js"
+        },
+        "./dist/RAG/methods/aload/types": {
+            "types": "./dist/RAG/methods/aload/types.d.ts",
+            "default": "./dist/RAG/methods/aload/types.js",
+            "import": "./dist/RAG/methods/aload/types.js",
+            "require": "./dist/RAG/methods/aload/types.js"
+        },
+        "./dist/RAG/methods/retrieve/types": {
+            "types": "./dist/RAG/methods/retrieve/types.d.ts",
+            "default": "./dist/RAG/methods/retrieve/types.js",
+            "import": "./dist/RAG/methods/retrieve/types.js",
+            "require": "./dist/RAG/methods/retrieve/types.js"
+        },
+        "./dist/LLM/methods/agentAbasic/types": {
+            "types": "./dist/LLM/methods/agentAbasic/types.d.ts",
+            "default": "./dist/LLM/methods/agentAbasic/types.js",
+            "import": "./dist/LLM/methods/agentAbasic/types.js",
+            "require": "./dist/LLM/methods/agentAbasic/types.js"
+        },
+        "./dist/LLM/methods/agentBasic/types": {
+            "types": "./dist/LLM/methods/agentBasic/types.d.ts",
+            "default": "./dist/LLM/methods/agentBasic/types.js",
+            "import": "./dist/LLM/methods/agentBasic/types.js",
+            "require": "./dist/LLM/methods/agentBasic/types.js"
+        },
+        "./dist/LLM/methods/agentTeam/types": {
+            "types": "./dist/LLM/methods/agentTeam/types.d.ts",
+            "default": "./dist/LLM/methods/agentTeam/types.js",
+            "import": "./dist/LLM/methods/agentTeam/types.js",
+            "require": "./dist/LLM/methods/agentTeam/types.js"
+        },
+        "./dist/LLM/methods/apredict/types": {
+            "types": "./dist/LLM/methods/apredict/types.d.ts",
+            "default": "./dist/LLM/methods/apredict/types.js",
+            "import": "./dist/LLM/methods/apredict/types.js",
+            "require": "./dist/LLM/methods/apredict/types.js"
+        },
+        "./dist/LLM/methods/comparePredict/types": {
+            "types": "./dist/LLM/methods/comparePredict/types.d.ts",
+            "default": "./dist/LLM/methods/comparePredict/types.js",
+            "import": "./dist/LLM/methods/comparePredict/types.js",
+            "require": "./dist/LLM/methods/comparePredict/types.js"
+        },
+        "./dist/LLM/methods/files/types": {
+            "types": "./dist/LLM/methods/files/types.d.ts",
+            "default": "./dist/LLM/methods/files/types.js",
+            "import": "./dist/LLM/methods/files/types.js",
+            "require": "./dist/LLM/methods/files/types.js"
+        },
+        "./dist/LLM/methods/getHistory/types": {
+            "types": "./dist/LLM/methods/getHistory/types.d.ts",
+            "default": "./dist/LLM/methods/getHistory/types.js",
+            "import": "./dist/LLM/methods/getHistory/types.js",
+            "require": "./dist/LLM/methods/getHistory/types.js"
+        },
+        "./dist/LLM/methods/getLlmConfig/types": {
+            "types": "./dist/LLM/methods/getLlmConfig/types.d.ts",
+            "default": "./dist/LLM/methods/getLlmConfig/types.js",
+            "import": "./dist/LLM/methods/getLlmConfig/types.js",
+            "require": "./dist/LLM/methods/getLlmConfig/types.js"
+        },
+        "./dist/LLM/methods/predict/types": {
+            "types": "./dist/LLM/methods/predict/types.d.ts",
+            "default": "./dist/LLM/methods/predict/types.js",
+            "import": "./dist/LLM/methods/predict/types.js",
+            "require": "./dist/LLM/methods/predict/types.js"
+        },
+        "./dist/SOCKET/types": {
+            "types": "./dist/SOCKET/types.d.ts",
+            "default": "./dist/SOCKET/types.js",
+            "import": "./dist/SOCKET/types.js",
+            "require": "./dist/SOCKET/types.js"
+        }
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/HidayetCanOzcan/VorionSDK.git"
+    },
+    "homepage": "https://github.com/HidayetCanOzcan/VorionSDK#readme",
+    "keywords": [
+        "pair",
+        "vorion",
+        "llm",
+        "typescript",
+        "api",
+        "sdk",
+        "ai",
+        "websockets"
+    ],
+    "author": "Hidayet Can Özcan",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jest": "^29.5.12",
+        "@types/node": "^20.14.9",
+        "@types/react": "^18.3.10",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.1.5",
+        "typescript": "^5.5.2"
+    },
+    "browser": {
+        "./dist/index.js": "./dist/browser.js",
+        "./dist/LLM/index.js": "./dist/LLM/browser-sdk.js",
+        "./dist/RAG/index.js": "./dist/RAG/browser-sdk.js",
+        "./dist/SOCKET/index.js": "./dist/SOCKET/browser-sdk.js",
+        "./dist/LLM/methods/predict/index.js": "./dist/LLM/methods/predict/browser.js",
+        "./dist/STATE/index.js": "./dist/STATE/browser.js",
+        "@dapr/dapr": false,
+        "@elysiajs/cors": false,
+        "elysia": false,
+        "@sinclair/typebox": false,
+        "@sinclair/typebox/system": false
+    },
+    "dependencies": {
+        "@types/uuid": "^10.0.0",
+        "uuid": "^10.0.0"
+    },
+    "optionalDependencies": {
+        "@dapr/dapr": "^3.4.1",
+        "@elysiajs/cors": "^1.1.1",
+        "elysia": "^1.1.16"
+    },
+    "peerDependencies": {}
 }

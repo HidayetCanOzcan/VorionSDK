@@ -4,3 +4,4 @@ dist
 .env
 exampletests.ts
 _.rise-consulting.net.pem
+scripts
