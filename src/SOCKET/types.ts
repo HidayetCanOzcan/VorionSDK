@@ -12,8 +12,8 @@ export enum VorionEvents {
 	INGEST_DOCUMENTS_FAILED = 'ingest-documents-failed',
 	INGEST_DOCUMENTS_SUCCEEDED = 'ingest-documents-succeeded',
 	INGEST_DOCUMENTS_SUCCEEDED_WITH_PARTIAL_ERROR = 'ingest-documents-succeeded-with-partial-error',
-	AGENT_TASK_COMPLETED = 'agent-task-completed',
-	AGENT_TASK_FAILED = 'agent-task-failed',
+	AGENT_TASK_COMPLETED = 'basic-agent-task-completed',
+	AGENT_TASK_FAILED = 'basic-agent-task-failed',
 }
 
 export type VorionEventHandlers = {
